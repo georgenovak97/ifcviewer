@@ -1,5 +1,7 @@
 # IFC Viewer for Nextcloud
 
+![IFC Viewer — 3D model with properties panel and measurements](docs/screenshot.png)
+
 A Nextcloud app for viewing IFC building models in the browser, powered by [xeokit-bim-viewer](https://github.com/xeokit/xeokit-bim-viewer) **2.7.1**.
 
 IFC files are converted server-side to XKT. The model is then displayed in a full-screen 3D viewer with an object tree, property inspector, section planes, and measurements. Public Nextcloud share links are supported for anonymous viewing.
