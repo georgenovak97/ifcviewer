@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>ifcviewer</id>
+    <name>IFC Viewer</name>
+    <summary>View IFC models with xeokit (sections and measurements)</summary>
+    <description><![CDATA[Opens IFC files in a full-page xeokit viewer with section planes and distance measurements. Supports public share links.]]></description>
+    <version>0.5.70</version>
+    <licence>agpl</licence>
+    <author>Avro</author>
+    <namespace>Ifcviewer</namespace>
+    <category>tools</category>
+    <dependencies>
+        <nextcloud min-version="32" max-version="33"/>
+    </dependencies>
+    <types>
+        <type>model</type>
+    </types>
+    <commands>
+        <command>OCA\Ifcviewer\Command\ConvertCommand</command>
+    </commands>
+</info>

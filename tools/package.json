@@ -1,0 +1,10 @@
+{
+  "name": "ifcviewer-convert",
+  "private": true,
+  "type": "module",
+  "description": "Server-side IFC to XKT conversion for xeokit-bim-viewer",
+  "dependencies": {
+    "@xeokit/xeokit-convert": "1.3.2",
+    "web-ifc": "0.0.66"
+  }
+}

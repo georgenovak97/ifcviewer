@@ -1,0 +1,21 @@
+#
+# xeokit / Nextcloud — свойства объекта Revit (без пользовательских параметров)
+# Положите рядом с JSON: C:\Users\gnovak\Desktop\260614\
+#
+# Третий столбец — имя параметра как в Revit (зависит от языка UI).
+# Ниже дубли EN + RU для встроенных параметров.
+#
+
+PropertySet:	xeokit_Object	I	IfcElement, IfcElementType, IfcBuildingElement, IfcBuildingElementType, IfcWall, IfcWallType, IfcSlab, IfcSlabType, IfcColumn, IfcColumnType, IfcBeam, IfcBeamType, IfcDoor, IfcDoorStyle, IfcWindow, IfcWindowStyle, IfcRoof, IfcRoofType, IfcStair, IfcStairType, IfcRailing, IfcRailingType, IfcCovering, IfcCoveringType, IfcMember, IfcMemberType, IfcPlate, IfcPlateType, IfcBuildingElementProxy, IfcBuildingElementProxyType, IfcFooting, IfcFootingType, IfcCurtainWall, IfcCurtainWallType, IfcPile, IfcPileType
+	Category	Text	Category
+	Category	Text	Категория
+	Family	Text	Family
+	Family	Text	Семейство
+	TypeName	Text	Type Name
+	TypeName	Text	Имя типа
+	TypeMark	Text	Type Mark
+	TypeMark	Text	Метка типа
+	Mark	Text	Mark
+	Mark	Text	Метка
+	Level	Text	Level
+	Level	Text	Уровень

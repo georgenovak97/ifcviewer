@@ -1,0 +1,4 @@
+{
+    "View IFC model": "Просмотр IFC-модели",
+    "IFC file is too large (%s). Maximum supported size is %s.": "Файл слишком большой (%s). Максимальный поддерживаемый размер IFC: %s."
+}

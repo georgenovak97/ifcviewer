@@ -1,0 +1,44 @@
+# Dependencies
+/vendor/
+/tools/node_modules/
+/tools/node-v*/
+
+# Review archives (local snapshots)
+/review/*.zip
+
+# PHPUnit
+/tests/.phpunit.cache/
+.phpunit.result.cache
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+
+# Conversion cache / runtime artifacts (never commit)
+*.partial
+status.json
+
+# Large sample models (keep repo lightweight)
+/tools/*.ifc
+/tools/*.xkt
+/tools/*.json
+!/tools/package.json
+!/tools/package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts
+*.tgz

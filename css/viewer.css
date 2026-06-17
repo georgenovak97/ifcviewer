@@ -1,0 +1,768 @@
+/* Keep Nextcloud header visible — do NOT zero out margin-top */
+body.ifcviewer-standalone {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	height: 100vh;
+	width: 100vw;
+	background: #000;
+}
+
+body.ifcviewer-standalone #ifcviewer-shell {
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+	min-height: 0;
+	position: relative;
+	overflow: hidden;
+	background: #000;
+}
+
+#content.app-ifcviewer {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: var(--body-height);
+	min-height: 0;
+	overflow: hidden;
+	padding: 0;
+	margin: var(--body-container-margin);
+	margin-top: var(--header-height);
+}
+
+#content.app-ifcviewer #ifcviewer-shell {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	position: relative;
+	overflow: hidden;
+	background: #000;
+	width: 100%;
+}
+
+#ifcviewer-app.ifcviewer-bim {
+	--ifc-black: #000;
+	--ifc-black-soft: #141414;
+	--ifc-black-hover: #2a2a2a;
+	--ifc-border: #444;
+	--ifc-text: #fff;
+	--ifc-text-muted: #aaa;
+	--ifc-toolbar-bottom: 8px;
+	--ifc-toolbar-height: 50px;
+	--ifc-navcube-gap: 4px;
+	--ifc-navcube-size: 150px;
+	--ifc-explorer-width: 460px;
+	--ifc-inspector-width: 520px;
+
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	width: 100%;
+	height: 100%;
+	font-family: Roboto, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	overflow: hidden;
+	background: #000;
+	-webkit-font-smoothing: antialiased;
+	isolation: isolate;
+}
+
+#ifcviewer-app #myViewer {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: stretch;
+	z-index: 1;
+	position: absolute;
+	inset: 0;
+	--left: 0;
+	--right: 0;
+	transition: left 300ms ease-in-out, right 300ms ease-in-out, width 300ms ease-in-out;
+}
+
+#ifcviewer-app #myToolbar {
+	display: flex;
+	width: max-content;
+	max-width: calc(100% - 24px);
+	min-width: 0;
+	position: absolute;
+	bottom: var(--ifc-toolbar-bottom);
+	top: auto;
+	left: 50%;
+	transform: translateX(-50%);
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	z-index: 50;
+	pointer-events: none;
+}
+
+#ifcviewer-app #myToolbar .xeokit-toolbar {
+	width: auto;
+	flex-wrap: nowrap;
+	justify-content: center;
+	padding: 4px 10px 4px 10px;
+}
+
+#ifcviewer-app #myToolbar .xeokit-btn-group {
+	margin-bottom: 0;
+}
+
+#ifcviewer-app #myToolbar .xeokit-toolbar,
+#ifcviewer-app #myToolbar .xeokit-btn-group,
+#ifcviewer-app #myToolbar .xeokit-btn {
+	pointer-events: auto;
+}
+
+#ifcviewer-app #myCanvas {
+	width: 100%;
+	height: 100%;
+	background: #000;
+	cursor: default;
+	pointer-events: auto;
+	margin: 0;
+	position: relative;
+	display: block;
+	touch-action: none;
+}
+
+#ifcviewer-app #myNavCubeCanvas {
+	position: absolute !important;
+	width: var(--ifc-navcube-size) !important;
+	height: var(--ifc-navcube-size) !important;
+	bottom: calc(var(--ifc-toolbar-bottom) + var(--ifc-toolbar-height) + var(--ifc-navcube-gap)) !important;
+	left: 50% !important;
+	right: auto !important;
+	top: auto !important;
+	transform: translateX(-50%) !important;
+	opacity: 0.38 !important;
+	z-index: 45 !important;
+	pointer-events: auto;
+	touch-action: none;
+	box-sizing: border-box;
+}
+
+#ifcviewer-app #myExplorer {
+	position: absolute;
+	height: 100%;
+	color: var(--ifc-text);
+	background: var(--ifc-black);
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-right: 2px solid var(--ifc-border);
+	padding: 0 0 12px 15px;
+	user-select: none;
+	top: 0;
+	left: -460px;
+	z-index: 20;
+	width: 460px;
+	box-sizing: border-box;
+	transition: left 300ms ease-in-out;
+	scrollbar-width: thin;
+	scrollbar-color: #777 var(--ifc-black-soft);
+}
+
+#ifcviewer-app #myInspector {
+	position: absolute;
+	height: 100%;
+	color: var(--ifc-text);
+	background: var(--ifc-black);
+	overflow-x: hidden;
+	overflow-y: auto;
+	border-left: 2px solid var(--ifc-border);
+	padding: 0 0 12px 15px;
+	top: 0;
+	right: calc(-1 * var(--ifc-inspector-width));
+	z-index: 20;
+	width: var(--ifc-inspector-width);
+	box-sizing: border-box;
+	transition: right 300ms ease-in-out;
+	pointer-events: auto;
+	scrollbar-width: thin;
+	scrollbar-color: #777 var(--ifc-black-soft);
+}
+
+#ifcviewer-app #myExplorer::-webkit-scrollbar,
+#ifcviewer-app #myInspector::-webkit-scrollbar {
+	width: 10px;
+}
+
+#ifcviewer-app #myExplorer::-webkit-scrollbar-track,
+#ifcviewer-app #myInspector::-webkit-scrollbar-track {
+	background: var(--ifc-black-soft);
+}
+
+#ifcviewer-app #myExplorer::-webkit-scrollbar-thumb,
+#ifcviewer-app #myInspector::-webkit-scrollbar-thumb {
+	background: #777;
+	border-radius: 5px;
+	border: 2px solid var(--ifc-black-soft);
+}
+
+#ifcviewer-app #myExplorer::-webkit-scrollbar-thumb:hover,
+#ifcviewer-app #myInspector::-webkit-scrollbar-thumb:hover {
+	background: #999;
+}
+
+#ifcviewer-app #explorer_toggle,
+#ifcviewer-app #inspector_toggle {
+	display: none;
+}
+
+#ifcviewer-app .explorer_toggle_label,
+#ifcviewer-app .inspector_toggle_label {
+	position: absolute;
+	top: 10px;
+	user-select: none;
+	color: var(--ifc-text);
+	background-color: var(--ifc-black);
+	text-align: center;
+	border: 2px solid var(--ifc-border);
+	padding: .375rem .75rem;
+	border-radius: .25rem;
+	pointer-events: auto;
+	z-index: 60;
+	transition: left 300ms ease-in-out, right 300ms ease-in-out;
+	cursor: pointer;
+}
+
+#ifcviewer-app .explorer_toggle_label {
+	left: 20px;
+}
+
+#ifcviewer-app .inspector_toggle_label {
+	right: 12px;
+}
+
+#ifcviewer-app #myToolbar .ifcviewer-close {
+	margin-left: 2px;
+}
+
+#ifcviewer-app #explorer_toggle:checked + .explorer_toggle_label {
+	left: 480px;
+	color: var(--ifc-text);
+	background-color: var(--ifc-black);
+	border-color: var(--ifc-text);
+}
+
+#ifcviewer-app #explorer_toggle:not(:checked) + .explorer_toggle_label {
+	left: 20px;
+	color: var(--ifc-text);
+	background-color: var(--ifc-black);
+	border-color: var(--ifc-border);
+}
+
+#ifcviewer-app #explorer_toggle:checked ~ #myExplorer {
+	left: 0;
+}
+
+#ifcviewer-app #explorer_toggle:not(:checked) ~ #myExplorer {
+	left: -460px;
+}
+
+#ifcviewer-app #explorer_toggle:checked ~ #myViewer {
+	left: 460px;
+	--left: 460;
+	width: calc(100% - (var(--left) + var(--right)));
+}
+
+#ifcviewer-app #explorer_toggle:not(:checked) ~ #myViewer {
+	left: 0;
+	--left: 0;
+	width: calc(100% - var(--right));
+}
+
+#ifcviewer-app #inspector_toggle:checked + .inspector_toggle_label {
+	right: calc(var(--ifc-inspector-width) + 20px);
+	color: var(--ifc-text);
+	background-color: var(--ifc-black);
+	border-color: var(--ifc-text);
+}
+
+#ifcviewer-app #inspector_toggle:not(:checked) + .inspector_toggle_label {
+	color: var(--ifc-text);
+	background-color: var(--ifc-black);
+	border-color: var(--ifc-border);
+}
+
+#ifcviewer-app #inspector_toggle:checked ~ #myInspector {
+	right: 0;
+}
+
+#ifcviewer-app #inspector_toggle:not(:checked) ~ #myInspector {
+	right: calc(-1 * var(--ifc-inspector-width));
+}
+
+#ifcviewer-app #inspector_toggle:checked ~ #myViewer {
+	--right: var(--ifc-inspector-width);
+	right: var(--ifc-inspector-width);
+	width: calc(100% - (var(--left) + var(--right)));
+}
+
+#ifcviewer-app #inspector_toggle:not(:checked) ~ #myViewer {
+	--right: 0;
+	right: 0;
+	width: calc(100% - var(--left));
+}
+
+#ifcviewer-app #ifcviewer-status {
+	position: absolute;
+	top: 56px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.85);
+	color: #fff;
+	padding: 10px 18px;
+	border-radius: 6px;
+	z-index: 70;
+	font-size: 14px;
+	max-width: 90%;
+	text-align: center;
+	pointer-events: none;
+}
+
+#ifcviewer-app #ifcviewer-status.hidden {
+	display: none;
+}
+
+/* Busy modal — centered when open */
+#content.app-ifcviewer .xeokit-busy-modal.ifcviewer-busy-open,
+#ifcviewer-app .xeokit-busy-modal.ifcviewer-busy-open {
+	display: flex !important;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-top: 0 !important;
+	position: fixed !important;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000000;
+}
+
+#content.app-ifcviewer .xeokit-busy-modal.ifcviewer-busy-hidden,
+#ifcviewer-app .xeokit-busy-modal.ifcviewer-busy-hidden {
+	display: none !important;
+	pointer-events: none !important;
+	visibility: hidden !important;
+}
+
+#content.app-ifcviewer .xeokit-busy-modal-content,
+#ifcviewer-app .ifcviewer-busy-modal-content,
+#ifcviewer-app .xeokit-busy-modal-content {
+	width: auto;
+	min-width: 280px;
+	max-width: min(90vw, 640px);
+	margin: 0 !important;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-message,
+#ifcviewer-app .ifcviewer-busy-message {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 16px;
+	overflow: hidden;
+	text-align: center;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-main,
+#ifcviewer-app .ifcviewer-busy-main {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4em;
+	min-width: 0;
+	width: auto;
+	white-space: nowrap;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-status,
+#ifcviewer-app .ifcviewer-busy-status {
+	min-height: 1.35em; /* reserved empty line */
+	font-size: 14px;
+	line-height: 1.35;
+	color: #777;
+	word-break: break-word;
+	white-space: normal;
+	text-align: center;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-status.is-error,
+#ifcviewer-app .ifcviewer-busy-status.is-error {
+	color: #b00020;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-controls,
+#ifcviewer-app .ifcviewer-busy-controls {
+	font-size: 13px;
+	line-height: 1.35;
+	color: #555;
+	word-break: break-word;
+	white-space: normal;
+	text-align: center;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-label,
+#content.app-ifcviewer .ifcviewer-busy-loading,
+#content.app-ifcviewer .ifcviewer-busy-sep,
+#content.app-ifcviewer .ifcviewer-busy-percent,
+#ifcviewer-app .ifcviewer-busy-label,
+#ifcviewer-app .ifcviewer-busy-loading,
+#ifcviewer-app .ifcviewer-busy-sep,
+#ifcviewer-app .ifcviewer-busy-percent {
+	flex: 0 0 auto;
+}
+
+#content.app-ifcviewer .ifcviewer-busy-filename,
+#ifcviewer-app .ifcviewer-busy-filename {
+	flex: 0 1 auto;
+	min-width: 0;
+	max-width: 60vw;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* legacy: keep old selectors harmless if referenced elsewhere */
+#content.app-ifcviewer .ifcviewer-busy-error.hidden,
+#content.app-ifcviewer .ifcviewer-busy-hint.hidden,
+#ifcviewer-app .ifcviewer-busy-error.hidden,
+#ifcviewer-app .ifcviewer-busy-hint.hidden {
+	display: none;
+}
+
+/* Keep xeokit overlays inside the viewer, below NC header */
+#content.app-ifcviewer .xeokit-busy-modal {
+	z-index: 80;
+}
+
+#content.app-ifcviewer .xeokit-classesTab .top-right,
+#content.app-ifcviewer .xeokit-objectsTab .top-right,
+#content.app-ifcviewer .xeokit-storeysTab .top-right {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+}
+
+/* Undo Nextcloud button overrides inside the viewer */
+#ifcviewer-app .xeokit-btn {
+	appearance: button;
+	-webkit-appearance: button;
+	min-height: unset;
+	margin: 0 2px 0 0;
+}
+
+#ifcviewer-app button {
+	min-height: unset;
+}
+
+/* Hide Models / Objects / Classes — explorer shows Storeys only */
+#ifcviewer-app .xeokit-tab.xeokit-modelsTab,
+#ifcviewer-app .xeokit-tab.xeokit-objectsTab,
+#ifcviewer-app .xeokit-tab.xeokit-classesTab {
+	display: none !important;
+}
+
+/* Toolbar — white buttons, black active state */
+#ifcviewer-app #myToolbar .xeokit-btn {
+	color: var(--ifc-black) !important;
+	background-color: #fff !important;
+	border: 2px solid var(--ifc-black) !important;
+}
+
+#ifcviewer-app #myToolbar .xeokit-btn.active,
+#ifcviewer-app #myToolbar .xeokit-btn.active:hover {
+	color: #fff !important;
+	background-color: var(--ifc-black) !important;
+	border-color: var(--ifc-black) !important;
+}
+
+#ifcviewer-app #myToolbar .xeokit-btn:hover:not(.active):not(.disabled) {
+	color: var(--ifc-black) !important;
+	background-color: #fff !important;
+	border-color: var(--ifc-black-hover) !important;
+}
+
+#ifcviewer-app #myToolbar .xeokit-btn.disabled {
+	opacity: 0.55;
+	color: #99A4AD !important;
+	border-color: #6c757d !important;
+}
+
+/* Close — inverted (black button, white icon) */
+#ifcviewer-app #myToolbar .ifcviewer-close {
+	color: #fff !important;
+	background-color: var(--ifc-black) !important;
+	border-color: var(--ifc-black) !important;
+	opacity: 1 !important;
+}
+
+#ifcviewer-app #myToolbar .ifcviewer-close:hover {
+	color: #fff !important;
+	background-color: var(--ifc-black-hover) !important;
+	border-color: var(--ifc-black-hover) !important;
+}
+
+/* Side toggles stay black */
+#ifcviewer-app .explorer_toggle_label,
+#ifcviewer-app .inspector_toggle_label {
+	color: var(--ifc-text) !important;
+	background-color: var(--ifc-black) !important;
+	border-color: var(--ifc-border) !important;
+}
+
+#ifcviewer-app #myExplorer > .xeokit-tabs,
+#ifcviewer-app #myInspector > .xeokit-tabs {
+	height: auto;
+	overflow: visible !important;
+}
+
+/* Inspector has a single tab — keep Properties content always visible */
+#ifcviewer-app #myInspector .xeokit-propertiesTab {
+	display: block;
+}
+
+#ifcviewer-app #myInspector .xeokit-propertiesTab .xeokit-tab-content {
+	display: block !important;
+}
+
+#ifcviewer-app #myViewer {
+	background: #000 !important;
+}
+
+#ifcviewer-app .xeokit-busy-modal {
+	background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+#ifcviewer-app .xeokit-busy-modal-backdrop {
+	background: #000 !important;
+}
+
+/* Explorer Tree header — match Properties panel */
+#ifcviewer-app #myExplorer > .xeokit-tabs > .xeokit-tab.xeokit-storeysTab {
+	display: block;
+	flex: 1 1 100%;
+	width: 100%;
+}
+
+#ifcviewer-app #myExplorer .xeokit-storeysTab .xeokit-tab-btn {
+	display: block !important;
+	pointer-events: none;
+	cursor: default;
+	margin-left: 0 !important;
+	padding: 0.75em 10px 0.75em 0 !important;
+	opacity: 1 !important;
+	color: var(--ifc-text) !important;
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 3px solid var(--ifc-text) !important;
+	background-color: transparent !important;
+	text-decoration: none;
+	width: fit-content;
+}
+
+#ifcviewer-app #myExplorer .xeokit-storeysTab .xeokit-tab-content {
+	display: block !important;
+	padding-top: 0.5em !important;
+}
+
+/* Explorer tabs: fixed layout for the Tree panel */
+#ifcviewer-app #myExplorer > .xeokit-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+
+#ifcviewer-app #myExplorer > .xeokit-tabs > .xeokit-tab:not(.xeokit-modelsTab):not(.xeokit-objectsTab):not(.xeokit-classesTab):not(.xeokit-storeysTab) {
+	display: contents;
+}
+
+#ifcviewer-app #myExplorer > .xeokit-tabs .xeokit-storeysTab .xeokit-tab-btn {
+	order: 0;
+	flex: 0 0 auto;
+	position: static;
+	z-index: 2;
+	background-color: transparent;
+}
+
+#ifcviewer-app #myExplorer > .xeokit-tabs .xeokit-tab-content {
+	order: 1;
+	flex: 1 1 100%;
+	width: 100%;
+	max-width: 100%;
+}
+
+#ifcviewer-app .xeokit-tab.active .xeokit-tab-content {
+	display: block !important;
+	height: auto !important;
+	padding-top: 0.5em !important;
+	float: none !important;
+	overflow: visible !important;
+}
+
+#ifcviewer-app .xeokit-tree-panel,
+#ifcviewer-app .xeokit-properties,
+#ifcviewer-app .xeokit-accordion {
+	height: auto !important;
+	min-height: 0;
+	overflow: visible !important;
+}
+
+#ifcviewer-app #myExplorer .xeokit-tab-content,
+#ifcviewer-app #myInspector .xeokit-tab-content,
+#ifcviewer-app .xeokit-propertiesTab .panel,
+#ifcviewer-app .xeokit-tabs .xeokit-tab-content,
+#ifcviewer-app .xeokit-modelsTab .xeokit-form-check span,
+#ifcviewer-app .xeokit-modelsTab .xeokit-form-check span.disabled,
+#ifcviewer-app .xeokit-modelsTab .xeokit-form-check span.disabled:hover {
+	background-color: var(--ifc-black) !important;
+}
+
+#ifcviewer-app .xeokit-tabs .xeokit-tab-btn {
+	color: var(--ifc-text-muted) !important;
+	border-top-color: var(--ifc-border) !important;
+}
+
+#ifcviewer-app .xeokit-tabs .xeokit-tab.active .xeokit-tab-btn,
+#ifcviewer-app .xeokit-tabs .xeokit-tab-btn:hover,
+#ifcviewer-app .xeokit-tabs .xeokit-tab-btn:focus {
+	color: var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-tabs .xeokit-tab.active .xeokit-tab-btn {
+	background-color: transparent !important;
+	border-bottom: 3px solid var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-tabs .xeokit-btn {
+	color: var(--ifc-text) !important;
+	background-color: transparent !important;
+	border-color: var(--ifc-border) !important;
+}
+
+#ifcviewer-app .xeokit-tabs .xeokit-btn:hover,
+#ifcviewer-app .xeokit-tabs .xeokit-btn.active {
+	color: var(--ifc-text) !important;
+	border-color: var(--ifc-text) !important;
+	background-color: var(--ifc-black-hover) !important;
+}
+
+#ifcviewer-app #myInspector .xeokit-propertiesTab .xeokit-tab-btn {
+	margin-left: 0 !important;
+	padding: 0.75em 10px 0.75em 0 !important;
+	opacity: 1 !important;
+	color: var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-propertiesTab .title,
+#ifcviewer-app .xeokit-propertiesTab .subtitle,
+#ifcviewer-app .xeokit-propertiesTab .subsubtitle,
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button {
+	color: var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-propertiesTab .title {
+	margin: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 12px !important;
+}
+
+#ifcviewer-app .xeokit-objectsTab ul li span,
+#ifcviewer-app .xeokit-classesTab ul li span,
+#ifcviewer-app .xeokit-storeysTab ul li span,
+#ifcviewer-app .xeokit-modelsTab .xeokit-form-check span {
+	color: var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-objectsTab .highlighted-node,
+#ifcviewer-app .xeokit-classesTab .highlighted-node,
+#ifcviewer-app .xeokit-storeysTab .highlighted-node {
+	background: #1a3a6b !important;
+	color: #fff !important;
+}
+
+#ifcviewer-app .xeokit-section-counter:hover,
+#ifcviewer-app .xeokit-section-menu-button:hover,
+#ifcviewer-app .xeokit-arrow-up:hover,
+#ifcviewer-app .xeokit-arrow-down:hover {
+	color: var(--ifc-text) !important;
+	border-color: var(--ifc-text) !important;
+}
+
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-container .xeokit-accordion-button,
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-container.active .xeokit-accordion-button {
+	background-color: var(--ifc-black-soft) !important;
+}
+
+/* Clicks on +/- icon must hit the button — xeokit checks e.target === .xeokit-accordion-button */
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button span,
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button span::before,
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button span::after {
+	pointer-events: none;
+}
+
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button {
+	position: relative;
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+	padding-right: 48px !important;
+}
+
+#ifcviewer-app .xeokit-accordion .xeokit-accordion-button span {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* Undo Nextcloud global `table { white-space: nowrap }` inside properties */
+#ifcviewer-app .xeokit-propertiesTab .element-attributes {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#ifcviewer-app .xeokit-table {
+	table-layout: fixed;
+	width: 100%;
+	white-space: normal !important;
+	border-collapse: collapse;
+}
+
+#ifcviewer-app .xeokit-table td {
+	white-space: normal !important;
+	vertical-align: top !important;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	line-height: 1.45;
+}
+
+#ifcviewer-app .xeokit-table .td1 {
+	width: 42%;
+	max-width: 42%;
+	font-weight: bold;
+}
+
+#ifcviewer-app .xeokit-table .td2 {
+	width: 58%;
+}
+
+#ifcviewer-app .xeokit-accordion-panel .xeokit-table {
+	margin-bottom: 0.5rem;
+}
+
+#ifcviewer-app #myCanvas,
+#ifcviewer-app #myNavCubeCanvas {
+	/* Avoid blurry scaling that shifts pointer coordinates */
+	image-rendering: auto;
+}
+
+/* Orbit pivot dot is not needed (especially during keyboard navigation) */
+#ifcviewer-app .xeokit-camera-pivot-marker {
+	display: none !important;
+	visibility: hidden !important;
+}
