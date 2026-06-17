@@ -131,6 +131,86 @@ The viewer uses a BIM API compatible with xeokit-bim-viewer:
 
 Public share routes use the same endpoints under `/api/bim/s/{token}/`.
 
+## Merging IFC files (`merge_ifc.py`)
+
+Use `tools/merge_ifc.py` when you need **one combined IFC** from several source models (e.g. disciplines exported separately from Revit).
+
+Before merging, the script renames spatial roots (`IfcProject`, `IfcSite`, `IfcBuilding`) using each file’s **basename** (`file1.ifc` → label `file1`). In the viewer **Explorer** tree, you then see meaningful source names instead of repeated generic labels.
+
+### Prerequisites
+
+```bash
+cd tools
+python3 -m pip install -r requirements.txt
+```
+
+Requires **Python 3.9+** and two packages: `ifcopenshell` and `ifcpatch`.
+
+### Basic usage
+
+```bash
+cd tools
+
+# output path first, then inputs
+python3 merge_ifc.py merged.ifc arch.ifc struct.ifc mep.ifc
+
+# explicit output flag
+python3 merge_ifc.py -o merged.ifc arch.ifc struct.ifc
+
+# merge all IFC files in the current folder (globs work even on Windows PowerShell)
+python3 merge_ifc.py -o merged.ifc *.ifc
+```
+
+### Input list from a file
+
+Create `sources.txt` (one path per line, `#` for comments):
+
+```text
+# Discipline exports
+arch.ifc
+struct.ifc
+mep.ifc
+```
+
+Then run:
+
+```bash
+python3 merge_ifc.py --list sources.txt -o merged.ifc
+```
+
+You can combine `--list` with extra paths on the command line.
+
+### Output
+
+| File | Description |
+|------|-------------|
+| `merged.ifc` | Combined model ready for upload |
+| `merged.ifc.merge.json` | Manifest: source filenames, labels, building GUIDs |
+
+Example console output:
+
+```text
+[1/3] labeled arch.ifc -> arch
+[2/3] labeled struct.ifc -> struct
+[3/3] labeled mep.ifc -> mep
+Merging 3 models into merged.ifc ...
+Done: merged.ifc
+Manifest: merged.ifc.merge.json
+```
+
+### Use in Nextcloud
+
+1. Upload `merged.ifc` to Nextcloud Files.
+2. Open it in IFC Viewer — the server converts it to XKT (cache refreshes on re-convert).
+3. In **Explorer**, each former source file appears under its label.
+
+**Tips**
+
+- You need **at least two** unique input files.
+- Duplicate paths are skipped automatically.
+- Large models may take several minutes to merge; run on a machine with enough RAM.
+- The manifest is for traceability only; the viewer does not read `.merge.json`.
+
 ## Development
 
 ### Deploy changes to a running server
